@@ -1,0 +1,35 @@
+{
+  "name": "addendex",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Addendex — plataforma SaaS para generación de addendas CFDI (Soriana y otras cadenas). Monolito modular en monorepo pnpm.",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11"
+  },
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm -r test",
+    "api": "pnpm --filter @addendex/api",
+    "web": "pnpm --filter @addendex/web",
+    "shared": "pnpm --filter @addendex/shared"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "typescript-eslint": "^8.66.0"
+  }
+}

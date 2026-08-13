@@ -1,0 +1,239 @@
+// Addenda SaaS - esquema Prisma 7 (monolito modular).
+// Namespaces Postgres: auth (identidad), core (dominio), notif (notificaciones).
+// FKs reales entre namespaces (la ganancia clave del monolito).
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  runtime      = "nodejs"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["app_auth", "core", "notif"]
+}
+
+// ============================================================
+//  auth
+// ============================================================
+
+enum Rol {
+  USER
+  ADMIN
+
+  @@schema("app_auth")
+}
+
+model Usuario {
+  id           String   @id @default(uuid()) @db.Uuid
+  nombre       String
+  correo       String   @unique
+  passwordHash String   @map("password_hash")
+  rol          Rol      @default(USER)
+  activo       Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  refreshTokens       RefreshToken[]
+  passwordResetTokens PasswordResetToken[]
+  consentimientos     Consentimiento[]
+  addendas            Addenda[]
+
+  @@map("usuarios")
+  @@schema("app_auth")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  usuarioId String   @map("usuario_id") @db.Uuid
+  tokenHash String   @map("token_hash")
+  expiraEn  DateTime @map("expira_en")
+  revocado  Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId])
+  @@map("refresh_tokens")
+  @@schema("app_auth")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  usuarioId String   @map("usuario_id") @db.Uuid
+  tokenHash String   @map("token_hash")
+  expiraEn  DateTime @map("expira_en")
+  usado     Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId])
+  @@map("password_reset_tokens")
+  @@schema("app_auth")
+}
+
+// Aceptacion de un documento legal (terminos, privacidad, cookies) al registrarse.
+// Una fila por documento; guarda la version aceptada y la fecha (auditable).
+enum DocumentoLegal {
+  TERMINOS
+  PRIVACIDAD
+  COOKIES
+
+  @@schema("app_auth")
+}
+
+model Consentimiento {
+  id         String         @id @default(uuid()) @db.Uuid
+  usuarioId  String         @map("usuario_id") @db.Uuid
+  documento  DocumentoLegal
+  version    String
+  aceptadoEn DateTime       @default(now()) @map("aceptado_en")
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId])
+  @@map("consentimientos")
+  @@schema("app_auth")
+}
+
+// ============================================================
+//  core
+// ============================================================
+
+enum EstadoAddenda {
+  GENERADA
+  ENVIADA
+  ERROR
+
+  @@schema("core")
+}
+
+model Empresa {
+  id        String   @id @default(uuid()) @db.Uuid
+  nombre    String
+  rfc       String   @unique
+  direccion String?
+  telefono  String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  addendas Addenda[]
+  tipos TipoAddenda[]
+
+  @@map("empresas")
+  @@schema("core")
+}
+
+
+model TipoAddenda {
+  id                  String   @id @default(uuid()) @db.Uuid
+  empresaId           String   @map("empresa_id") @db.Uuid
+  nombre              String
+  configuracionCampos Json     @map("configuracion_campos")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  empresa     Empresa     @relation(fields: [empresaId], references: [id])
+  addendas Addenda[]
+
+  @@unique([empresaId, nombre])
+  @@index([empresaId])
+  @@map("tipos_addenda")
+  @@schema("core")
+}
+
+model Addenda {
+  id              String        @id @default(uuid()) @db.Uuid
+  usuarioId       String        @map("usuario_id") @db.Uuid
+  empresaId       String        @map("empresa_id") @db.Uuid
+  tipoAddendaId   String        @map("tipo_addenda_id") @db.Uuid
+  estado          EstadoAddenda @default(GENERADA)
+  fechaGeneracion DateTime      @default(now()) @map("fecha_generacion")
+  xmlPath         String?       @map("xml_path")
+  xmlContent      String?       @map("xml_content")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  usuario     Usuario     @relation(fields: [usuarioId], references: [id])
+  empresa     Empresa     @relation(fields: [empresaId], references: [id])
+  tipoAddenda TipoAddenda @relation(fields: [tipoAddendaId], references: [id])
+
+  informacionXml InformacionXml?
+  respuesta      RespuestaAddenda?
+  notificaciones Notificacion[]
+
+  @@index([usuarioId])
+  @@index([empresaId])
+  @@index([tipoAddendaId])
+  @@index([estado])
+  @@index([fechaGeneracion(sort: Desc)])
+  @@map("addendas")
+  @@schema("core")
+}
+
+model InformacionXml {
+  id            String    @id @default(uuid()) @db.Uuid
+  addendaId     String    @unique @map("addenda_id") @db.Uuid
+  nombreArchivo String    @map("nombre_archivo")
+  serieCfdi     String?   @map("serie_cfdi")
+  folioCfdi     String?   @map("folio_cfdi")
+  uuidCfdi      String?   @unique @map("uuid_cfdi")
+  fechaCfdi     DateTime? @map("fecha_cfdi")
+  subtotal      Decimal?  @db.Decimal(18, 6)
+  iva           Decimal?  @db.Decimal(18, 2)
+  total         Decimal?  @db.Decimal(18, 6)
+  moneda        String?
+  fechaSubida   DateTime  @default(now()) @map("fecha_subida")
+
+  addenda Addenda @relation(fields: [addendaId], references: [id], onDelete: Cascade)
+
+  @@index([serieCfdi, folioCfdi])
+  @@map("informacion_xml")
+  @@schema("core")
+}
+
+// Snapshot de los campos globales dinámicos capturados (según el JSONB del tipo).
+model RespuestaAddenda {
+  id              String   @id @default(uuid()) @db.Uuid
+  addendaId       String   @unique @map("addenda_id") @db.Uuid
+  datosFormulario Json     @map("datos_formulario")
+  fechaRespuesta  DateTime @default(now()) @map("fecha_respuesta")
+
+  addenda Addenda @relation(fields: [addendaId], references: [id], onDelete: Cascade)
+
+  @@map("respuestas_addenda")
+  @@schema("core")
+}
+
+// ============================================================
+//  notif
+// ============================================================
+
+enum EstadoNotificacion {
+  PENDIENTE
+  ENVIADA
+  FALLIDA
+
+  @@schema("notif")
+}
+
+model Notificacion {
+  id           String             @id @default(uuid()) @db.Uuid
+  addendaId    String             @map("addenda_id") @db.Uuid
+  destinatario String
+  asunto       String
+  estado       EstadoNotificacion @default(PENDIENTE)
+  error        String?
+  enviadaEn    DateTime?          @map("enviada_en")
+  createdAt    DateTime           @default(now()) @map("created_at")
+
+  // FK cross-schema notif -> core
+  addenda Addenda @relation(fields: [addendaId], references: [id], onDelete: Cascade)
+
+  @@index([addendaId])
+  @@map("notificaciones")
+  @@schema("notif")
+}
+

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # shared y el cliente Prisma son necesarios para typecheck/test.
+      - run: pnpm --filter @addendex/shared build
+      # prisma.config.ts resuelve DIRECT_URL al cargar, asi que cualquier comando
+      # prisma (incluido generate, que no se conecta) necesita la variable.
+      - name: Prisma generate
+        run: pnpm --filter @addendex/api exec prisma generate
+        env:
+          DATABASE_URL: postgresql://user:pass@localhost:5432/db
+          DIRECT_URL: postgresql://user:pass@localhost:5432/db
+
+      - run: pnpm -r typecheck
+      - run: pnpm lint
+
+      - name: Test
+        run: pnpm -r test
+        env:
+          DATABASE_URL: postgresql://user:pass@localhost:5432/db
+          DIRECT_URL: postgresql://user:pass@localhost:5432/db
+          JWT_ACCESS_SECRET: ci-access-secret
+          JWT_REFRESH_SECRET: ci-refresh-secret
+
+      - run: pnpm -r build

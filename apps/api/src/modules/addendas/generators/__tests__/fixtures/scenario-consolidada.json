@@ -1,0 +1,70 @@
+{
+  "isConsolidada": true,
+  "datosCFDI": {
+    "comprobante": {
+      "Serie": "A",
+      "Folio": "123",
+      "Fecha": "2026-06-01T10:00:00",
+      "SubTotal": "151.000000",
+      "Total": "175.16",
+      "Moneda": "MXN"
+    },
+    "impuestos": { "TasaIVA": "24.16" },
+    "conceptos": [
+      {
+        "index": 0,
+        "Descripcion": "PRODUCTO A",
+        "Cantidad": "10.00",
+        "ValorUnitario": "10.000000",
+        "Importe": "100.000000",
+        "TasaIVA": "16.00"
+      },
+      {
+        "index": 1,
+        "Descripcion": "PRODUCTO B",
+        "Cantidad": "2.00",
+        "ValorUnitario": "25.500000",
+        "Importe": "51.000000",
+        "TasaIVA": "16.00"
+      }
+    ]
+  },
+  "datosGlobales": {
+    "proveedor": "PROV001",
+    "tienda": "0123",
+    "entrega": "0123",
+    "cita": "CITA-999",
+    "folioNotaEntrada": "",
+    "numeroBultos": "12",
+    "folioPedido": "PED-555",
+    "fechaEntrega": "2026-06-05",
+    "tipoMoneda": "MXN",
+    "tipoBulto": "cajas"
+  },
+  "tarimas": [
+    { "numero": "1", "codigoBarra": "SSCC0001" },
+    { "numero": "2", "codigoBarra": "SSCC0002" }
+  ],
+  "productos": [
+    {
+      "index": 0,
+      "Descripcion": "PRODUCTO A",
+      "Cantidad": "10.00",
+      "ValorUnitario": "10.000000",
+      "Importe": "100.000000",
+      "TasaIVA": "16.00",
+      "Codigo": "EAN0001",
+      "NumeroTarima": "1"
+    },
+    {
+      "index": 1,
+      "Descripcion": "PRODUCTO B",
+      "Cantidad": "2.00",
+      "ValorUnitario": "25.500000",
+      "Importe": "51.000000",
+      "TasaIVA": "16.00",
+      "Codigo": "EAN0002",
+      "NumeroTarima": "2"
+    }
+  ]
+}

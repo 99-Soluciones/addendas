@@ -1,0 +1,41 @@
+# Orquestación local/servidor. La base de datos es Supabase (externa), por eso
+# no hay servicio de Postgres aquí. El servicio "web" (nginx) es el punto de
+# entrada público y hace de API gateway hacia "api".
+
+services:
+  api:
+    image: ghcr.io/lsheel/addendex-api:latest
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    env_file: ./apps/api/.env
+    environment:
+      NODE_ENV: production
+      API_HOST: 0.0.0.0
+    expose:
+      - "3000"
+    restart: unless-stopped
+
+  web:
+    image: ghcr.io/lsheel/addendex-web:latest
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+# Para desarrollo local con Postgres en contenedor (en vez de Supabase),
+# descomenta este servicio y apunta DATABASE_URL/DIRECT_URL a db:5432.
+#  db:
+#    image: postgres:16-alpine
+#    environment:
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: addenda
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+#volumes:
+#  pgdata:
