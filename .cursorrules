@@ -1,0 +1,11 @@
+# Reglas del proyecto Addenda SaaS (ver ai-context.md para el detalle completo)
+
+- Monolito modular en monorepo pnpm: apps/api (Express 5 + Prisma 7), apps/web (React 19 + Vite 8 + Tailwind v4), packages/shared. Usa SIEMPRE pnpm.
+- TypeScript estricto + verbatimModuleSyntax: usa `import type`; en api/shared los imports relativos llevan extensión `.js` (NodeNext).
+- api por módulo: routes -> controller -> service (+ schema Zod). Lógica en services.
+- Errores: lanza AppError/subclases (utils/http-errors.ts); el errorHandler central responde. Valida con Zod en el borde.
+- DB: Prisma 7, multiSchema app_auth/core/notif (NO uses `auth`, lo reserva Supabase). url/directUrl van en prisma.config.ts, no en el schema. Runtime usa driver adapter con DATABASE_URL pooled.
+- Generador de addendas: el builder es un port VERBATIM del MVP; la indentación y los espacios son significativos (byte-compat). No reformatear; respeta los golden tests.
+- Nombres de dominio en español; snake_case en DB vía @map, camelCase en TS.
+- Sin emojis en código, UI ni mensajes.
+- Frontend: Zustand + TanStack Query; formularios dinámicos con RHF + buildZodSchema desde el JSONB de tipos_addenda; Tailwind v4 con @theme; iconos SVG; fuente Josefin Sans.
