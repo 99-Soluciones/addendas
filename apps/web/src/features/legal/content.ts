@@ -19,7 +19,7 @@ const terminos: LegalDocContent = {
     { kind: "h2", text: "1. Aceptación de los Términos" },
     {
       kind: "p",
-      text: "Al acceder o utilizar la plataforma Addendex (en adelante, la Plataforma), usted acepta quedar vinculado por los presentes Términos y Condiciones de Uso (en adelante, los Términos). Si no está de acuerdo con alguno de ellos, le pedimos que se abstenga de utilizar la Plataforma.",
+      text: "Al acceder o utilizar la plataforma Addenda - 99 Soluciones (en adelante, la Plataforma), usted acepta quedar vinculado por los presentes Términos y Condiciones de Uso (en adelante, los Términos). Si no está de acuerdo con alguno de ellos, le pedimos que se abstenga de utilizar la Plataforma.",
     },
     {
       kind: "p",
@@ -28,7 +28,7 @@ const terminos: LegalDocContent = {
     { kind: "h2", text: "2. Descripción del Servicio" },
     {
       kind: "p",
-      text: "Addendex es una plataforma web que permite la generación de addenda en formato XML para Comprobantes Fiscales Digitales por Internet versión 4.0 (CFDI 4.0), conforme a los requerimientos específicos de distintos clientes o cadenas comerciales que operan en México.",
+      text: "Addenda - 99 Soluciones es una plataforma web que permite la generación de addenda en formato XML para Comprobantes Fiscales Digitales por Internet versión 4.0 (CFDI 4.0), conforme a los requerimientos específicos de distintos clientes o cadenas comerciales que operan en México.",
     },
     {
       kind: "p",
@@ -144,7 +144,7 @@ const privacidad: LegalDocContent = {
       kind: "list",
       items: [
         "Nombre: 99 REMEDIOS S.A. de C.V.",
-        "Plataforma: Addendex",
+        "Plataforma: Addenda - 99 Soluciones",
         "País: Estados Unidos Mexicanos",
         "Correo de contacto: contact@builtbysori.me",
       ],
@@ -282,7 +282,7 @@ const cookies: LegalDocContent = {
     { kind: "h2", text: "2. Tipos de Cookies que Utiliza la Plataforma" },
     {
       kind: "p",
-      text: "Addendex utiliza exclusivamente cookies técnicas o estrictamente necesarias para el funcionamiento de la Plataforma. No se utilizan cookies de análisis, publicidad, perfilado ni rastreo de terceros.",
+      text: "Addenda - 99 Soluciones utiliza exclusivamente cookies técnicas o estrictamente necesarias para el funcionamiento de la Plataforma. No se utilizan cookies de análisis, publicidad, perfilado ni rastreo de terceros.",
     },
     { kind: "h3", text: "2.1 Cookies técnicas o de sesión (estrictamente necesarias)" },
     {
@@ -349,4 +349,4 @@ export const LEGAL_CONTENT: Record<LegalDocId, LegalDocContent> = {
 };
 
 export const LEGAL_COPYRIGHT =
-  "© 2026 99 REMEDIOS S.A. de C.V. - Addendex. Todos los derechos reservados.";
+  "© 2026 99 REMEDIOS S.A. de C.V. - Addenda - 99 Soluciones. Todos los derechos reservados.";
