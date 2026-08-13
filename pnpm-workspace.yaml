@@ -1,0 +1,13 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+# Scripts de build aprobados (pnpm 11; reemplaza pnpm.onlyBuiltDependencies).
+# Nativos necesarios en true; @scarf/scarf es telemetria y se omite.
+allowBuilds:
+  "@prisma/engines": true
+  "@scarf/scarf": false
+  "@swc/core": true
+  esbuild: true
+  prisma: true
+overrides:
+  js-yaml: ^5.2.1
