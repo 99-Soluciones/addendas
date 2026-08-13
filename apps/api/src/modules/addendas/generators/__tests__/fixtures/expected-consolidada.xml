@@ -1,0 +1,91 @@
+<cfdi:Addenda>
+    <DSCargaRemisionProv>
+        <Remision Id="Remision0" RowOrder="0">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <Consecutivo>0</Consecutivo>
+            <FechaRemision>2026-06-01</FechaRemision>
+            <Tienda>0123</Tienda>
+            <TipoMoneda>1</TipoMoneda>
+            <TipoBulto>1</TipoBulto>
+            <EntregaMercancia>0123</EntregaMercancia>
+            <CumpleReqFiscales>true</CumpleReqFiscales>
+            <CantidadBultos>12</CantidadBultos>
+            <Subtotal>151.000000</Subtotal>
+            <Descuentos>0.00</Descuentos>
+            <IEPS>0.00</IEPS>
+            <IVA>24.16</IVA>
+            <OtrosImpuestos>0.00</OtrosImpuestos>
+            <Total>175.16</Total>
+            <CantidadPedidos>1</CantidadPedidos>
+            <FechaEntregaMercancia>2026-06-05</FechaEntregaMercancia>
+            <EmpaqueEnCajas>true</EmpaqueEnCajas>
+            <EmpaqueEnTarimas>true</EmpaqueEnTarimas>
+            <CantidadCajasTarimas>2</CantidadCajasTarimas>
+            <Cita>CITA-999</Cita>
+        </Remision>
+        <Pedidos Id="Pedidos0" RowOrder="0">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <FolioPedido>PED-555</FolioPedido>
+            <Tienda>0123</Tienda>
+            <CantidadArticulos>2</CantidadArticulos>
+        </Pedidos>
+        <Articulos Id="Articulos0" RowOrder="0">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <FolioPedido>PED-555</FolioPedido>
+            <Tienda>0123</Tienda>
+            <Codigo>EAN0001</Codigo>
+            <CantidadUnidadCompra>10.00</CantidadUnidadCompra>
+            <CostoNetoUnidadCompra>10.000000</CostoNetoUnidadCompra>
+            <PorcentajeIEPS>0.00</PorcentajeIEPS>
+            <PorcentajeIVA>16.00</PorcentajeIVA>
+        </Articulos>
+        <Articulos Id="Articulos1" RowOrder="1">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <FolioPedido>PED-555</FolioPedido>
+            <Tienda>0123</Tienda>
+            <Codigo>EAN0002</Codigo>
+            <CantidadUnidadCompra>2.00</CantidadUnidadCompra>
+            <CostoNetoUnidadCompra>25.500000</CostoNetoUnidadCompra>
+            <PorcentajeIEPS>0.00</PorcentajeIEPS>
+            <PorcentajeIVA>16.00</PorcentajeIVA>
+        </Articulos>        
+        <CajasTarimas Id="CajaTarima0" RowOrder="0">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <NumeroCajaTarima>1</NumeroCajaTarima>
+            <CodigoBarraCajaTarima>SSCC0001</CodigoBarraCajaTarima>
+            <SucursalDistribuir>0123</SucursalDistribuir>
+            <CantidadArticulos>2</CantidadArticulos>
+        </CajasTarimas>
+        <CajasTarimas Id="CajaTarima1" RowOrder="1">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <NumeroCajaTarima>2</NumeroCajaTarima>
+            <CodigoBarraCajaTarima>SSCC0002</CodigoBarraCajaTarima>
+            <SucursalDistribuir>0123</SucursalDistribuir>
+            <CantidadArticulos>2</CantidadArticulos>
+        </CajasTarimas>        
+        <ArticulosPorCajaTarima Id="ArticulosPorCajaTarima0" RowOrder="0">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <FolioPedido>PED-555</FolioPedido>
+            <NumeroCajaTarima>1</NumeroCajaTarima>
+            <SucursalDistribuir>0123</SucursalDistribuir>
+            <Codigo>EAN0001</Codigo>
+            <CantidadUnidadCompra>10.00</CantidadUnidadCompra>
+        </ArticulosPorCajaTarima>
+        <ArticulosPorCajaTarima Id="ArticulosPorCajaTarima1" RowOrder="1">
+            <Proveedor>PROV001</Proveedor>
+            <Remision>A-123</Remision>
+            <FolioPedido>PED-555</FolioPedido>
+            <NumeroCajaTarima>2</NumeroCajaTarima>
+            <SucursalDistribuir>0123</SucursalDistribuir>
+            <Codigo>EAN0002</Codigo>
+            <CantidadUnidadCompra>2.00</CantidadUnidadCompra>
+        </ArticulosPorCajaTarima>
+    </DSCargaRemisionProv>
+</cfdi:Addenda>
