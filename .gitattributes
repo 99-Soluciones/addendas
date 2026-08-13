@@ -1,0 +1,5 @@
+# Normaliza finales de línea a LF (clave para los golden tests byte a byte).
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
