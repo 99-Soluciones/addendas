@@ -25,8 +25,8 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "@typescript/native": "npm:typescript@^7.0.2",
-    "vitest": "4.1.8"
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "vitest": "4.1.12"
   }
 }
