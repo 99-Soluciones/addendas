@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import nodemailer from "nodemailer";
+import type { SMTPSentMessageInfo } from "nodemailer";
 import { env } from "../../config/env.js";
 import { BadRequestError } from "../../utils/http-errors.js";
 
@@ -41,7 +42,7 @@ export class EmailService {
     cuerpo,
     xml,
     filename,
-  }: SendAddendaArgs): Promise<nodemailer.SentMessageInfo> {
+  }: SendAddendaArgs): Promise<SMTPSentMessageInfo> {
     const transport = this.createTransport();
     const html = this.htmlLayout(`
       <p style="margin:0 0 16px;font-size:15px;color:#1a1a1a;">${cuerpo}</p>
@@ -70,7 +71,7 @@ export class EmailService {
     to,
     nombre,
     resetUrl,
-  }: SendPasswordResetArgs): Promise<nodemailer.SentMessageInfo> {
+  }: SendPasswordResetArgs): Promise<SMTPSentMessageInfo> {
     const transport = this.createTransport();
     const textCuerpo = [
       `Hola ${nombre},`,
